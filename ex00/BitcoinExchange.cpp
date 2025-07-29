@@ -1,8 +1,7 @@
 #include "BitcoinExchange.hpp"
 
 BitcoinExchange::BitcoinExchange()
-{
-}
+{}
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
 {
@@ -39,37 +38,6 @@ bool valid_date(std::string &date)
 		return false;
 	return (true);
 }
-/*w33333*/
-/*
-	std::ifstream file(input_file.c_str());
-	std::string line, key, val;
-	if (!file.is_open())
-	{
-		std::cerr << "pronlem while opening the file " << std::endl;exit(1);
-	}
-	while (std::getline(file, line))
-	{
-		size_t pos = line.find(',');
-		if (pos == std::string::npos)
-		{
-			// malfirmed line
-			continue;
-		}
-		key  = line.substr(0, pos);
-		val = line.substr(pos + 1);
-		// trim white sapces
-		key.erase(0, key.find_first_not_of(" \t"));
-		key.erase(key.find_last_not_of(" \t") + 1);
-		val.erase(0, val.find_first_not_of(" \t"));
-		val.erase(val.find_last_not_of(" \t") + 1);
-		data[key] = atof(val.c_str());
-
-		if (valid_date())
-	}
-	file.close();
-*/
-
-
 
 void BitcoinExchange::process_input(std::string &input_file)
 {
@@ -80,7 +48,7 @@ void BitcoinExchange::process_input(std::string &input_file)
 		return;
 	}
 	std::string line, key, val;
-	// std::getline(file, line);//skip header
+	// std::getline(file, line);//skip header /*what will happen if there no head*/
 	while (std::getline(file, line))
 	{
 		size_t d_pos = line.find('|');
@@ -100,11 +68,38 @@ void BitcoinExchange::process_input(std::string &input_file)
 
 		if (!valid_date(key))
 		{
-			std::cerr << "Error: bad input : " << key << std::endl;
+			std::cerr << "Error: bad input => " << key << std::endl;
 			continue;
 		}
-		// float bc_val;//check the val if its valid (contain somthing else than nubers ..), then put it in bc_val, then check the bounds
-		// before lokking for it in the base and printing the apropriate msg
+		char* end;
+		double amount = std::strtod(val.c_str(), &end);
+		if (*end != '\0')
+		{
+				std::cerr << "Error: bad input => " << val << std::endl;
+				continue;
+		}
+		if (amount < 0)
+		{
+				std::cerr << "Error: not a positive number." << std::endl;
+				continue;
+		}
+		if (amount > 1000)
+		{
+				std::cerr << "Error: too large a number." << std::endl;
+				continue;
+		}
+		std::map<std::string, float>::iterator it = data.find(key);
+		if (it == data.end())
+		{
+				it = data.lower_bound(key);
+				if (it == data.begin())
+				{
+						std::cerr << "Error: no earlier for " << key << std::endl;
+						continue;
+				}
+				--it;
+		}
+		std::cout << key << " => " << amount << " = " << (amount * it->second) << std::endl;
 	}
 }
 
@@ -116,7 +111,7 @@ BitcoinExchange::BitcoinExchange(std::string &data_base_file)
 	{
 		std::cerr << "pronlem while opening the file " << std::endl;exit(1);
 	}
-	// std::getline(file, line);// skip header
+	std::getline(file, line);
 	while (std::getline(file, line))
 	{
 		size_t pos = line.find(',');
@@ -128,7 +123,7 @@ BitcoinExchange::BitcoinExchange(std::string &data_base_file)
 		val = line.substr(pos + 1);
 		if (!valid_date(key))
 		{
-			std::cerr << "Error: bad date format in database : " << key << std::endl;
+			std::cerr << "Error: bad date format in database => " << key << std::endl;
 			continue;
 		}
 		data[key] = atof(val.c_str());
