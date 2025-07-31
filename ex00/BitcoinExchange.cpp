@@ -23,7 +23,7 @@ BitcoinExchange::~BitcoinExchange()
 
 bool is_all_digit(std::string &str)
 {
-	int i = 0;
+	size_t i = 0;
 	while (i < str.size())
 	{
 		if (!std::isdigit(str[i]))
@@ -64,7 +64,7 @@ bool valid_date(std::string &date)
 
 bool valid_amount(std::string &amount)
 {
-	int i = 0;
+	size_t i = 0;
 	int flag = 0;
 	if (amount.size() == 1 && !std::isdigit(amount[0]))
 		return (false);
@@ -83,76 +83,10 @@ bool valid_amount(std::string &amount)
 	return (true);
 }
 
-void BitcoinExchange::process_input(std::string &input_file)
-{
-	std::ifstream file(input_file.c_str());
-	if (!file.is_open())
-	{
-		std::cerr << "Error: could not open file." << std::endl;
-		return;
-	}
-	char* end;
-	double value;
-	std::map<std::string, float>::iterator it;
-	std::string line, key, val;
-
-	std::getline(file, line);
-	if (line != "date | value")
-	{
-			std::cerr << "Error: invalid input header" << std::endl;return;
-	}
-
-	while (std::getline(file, line))
-	{
-		size_t d_pos = line.find('|');
-		if (d_pos == std::string::npos)
-		{
-			std::cerr << "Error: bad input => " << line << std::endl;continue;
-		}
-
-		key  = line.substr(0, d_pos);
-		val = line.substr(d_pos + 1);
-
-		key.erase(0, key.find_first_not_of(" \t"));
-		key.erase(key.find_last_not_of(" \t") + 1);
-		val.erase(0, val.find_first_not_of(" \t"));
-		val.erase(val.find_last_not_of(" \t") + 1);
-
-		if (!valid_date(key))
-		{
-			std::cerr << "Error: bad input => " << key << std::endl;
-			continue;
-		}
-		value = std::strtod(val.c_str(), &end);
-		if (*end != '\0')
-		{
-				std::cerr << "Error: bad input => " << val << std::endl;continue;
-		}
-		if (value < 0)
-		{
-				std::cerr << "Error: not a positive number." << std::endl;continue;
-		}
-		if (value > 1000)
-		{
-				std::cerr << "Error: too large a number." << std::endl;continue;
-		}
-		std::map<std::string, float>::iterator it = data.find(key);
-		if (it == data.end())
-		{
-				it = data.lower_bound(key);
-				if (it == data.begin())
-				{
-						std::cerr << "Error: no earlier for " << key << std::endl;continue;
-				}
-				--it;
-		}
-		std::cout << key << " => " << value << " = " << (value * it->second) << std::endl;
-	}
-}
 
 bool valid_db_line(std::string &line)
 {
-	int i = 0;
+	size_t i = 0;
 	if (line.size() < 11)
 		return (false);
 	while (line[i])
@@ -167,6 +101,8 @@ bool valid_db_line(std::string &line)
 	}
 	return (true);
 }
+
+
 
 BitcoinExchange::BitcoinExchange(std::string &data_base_file)
 {
@@ -204,7 +140,6 @@ BitcoinExchange::BitcoinExchange(std::string &data_base_file)
 
 bool deal_with_line(std::string &line)
 {
-	int i = 0;
 	std::string str;
 
 	if (line.size() < 14)
@@ -218,17 +153,53 @@ bool deal_with_line(std::string &line)
 		std::cerr << line << "invalid input" << std::endl;
 		return (false);
 	}
-	str = line.substr(13, line.size() -1);
+	str = line.substr(13);
 	if (valid_amount(str))
 	{
-		if (str.size() < 1 && isdigit(str[1]) && str[0] == '-')
-			std::cerr <<  "Error: not a positive number." << std::endl;//khas nbyn chno li not a posi..
 		return (false);
 	}
 	return (true);
 }
 
-void deal_with_input(std::string &input_file)
+void BitcoinExchange::exec_line(const std::string &line)
+{
+	std::string key = line.substr(0, 10);
+	std::string val = line.substr(13);
+
+	char *end;
+	double value = std::strtod(val.c_str(), &end);
+	std::map<std::string, float>::iterator it;
+
+	if (*end != '\0')
+	{
+		std::cerr << "Error: bad input => " << val << std::endl;return;
+	}
+	if (value < 0)
+	{
+		std::cerr << "Error: not a positive number." << std::endl;return;
+	}
+	if (value > 1000)
+	{
+		std::cerr << "Error: too large a number." << std::endl;return;
+	}
+
+	it = data.find(key);
+	if (it == data.end())
+	{
+		it = data.lower_bound(key);
+		if (it == data.begin())
+		{
+			std::cerr << "Error: no earlier date for " << key << std::endl;
+			return;
+		}
+		--it;
+	}
+
+	std::cout << key << " => " << value << " = " << (value * it->second) << std::endl;
+}
+
+
+void BitcoinExchange:: deal_with_input(std::string &input_file)
 {
 	std::ifstream file(input_file.c_str());
 	if (!file.is_open())
@@ -236,7 +207,7 @@ void deal_with_input(std::string &input_file)
 		std::cerr << "Error: could not open file." << std::endl;
 		return;
 	}
-	std::string line, key, val;
+	std::string line;
 
 	std::getline(file, line);
 	if (line != "date | value")
@@ -246,9 +217,10 @@ void deal_with_input(std::string &input_file)
 
 	while (std::getline(file, line))
 	{
-		if (!deal_with_line(line))
-			return;
-		// else
-			// execlin(line);
+		if (deal_with_line(line))
+		{
+			exec_line(line);
+		}
 	}
+	file.close();
 }

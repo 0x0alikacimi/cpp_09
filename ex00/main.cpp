@@ -10,7 +10,7 @@ int main(int ac , char **av)
 		std::string db_file = "data.csv";
 
 		BitcoinExchange exchange(db_file);
-		exchange.process_input(input_file);
+		exchange.deal_with_input(input_file);
 
 	}
 	else

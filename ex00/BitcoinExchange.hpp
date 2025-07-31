@@ -17,8 +17,8 @@ class BitcoinExchange
 		~BitcoinExchange();
 
 		BitcoinExchange(std::string &filename);
-
-		void process_input(std::string &input_file);
+		void deal_with_input(std::string &input_file);
+		void exec_line(const std::string &line);
 
 };
 
