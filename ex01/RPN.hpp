@@ -5,11 +5,6 @@
 #include <stack>
 #include <sstream>
 
-
-class rpn
-{
-	private :
-	public :
-};
+void rpn_ccalculation(std::string &str);
 
 #endif
