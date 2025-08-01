@@ -1,9 +1,9 @@
 NAME = RPN
 
-SRC_FILES = main.cpp
+SRC_FILES = main.cpp RPN.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
-HEADERS =
+HEADERS = RPN.hpp
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
