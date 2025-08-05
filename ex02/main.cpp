@@ -45,14 +45,23 @@ void set_up(std::vector<int> &data)
 	pmergeme_deq(deq);
 
 	std::cout << "Final sorted vector:\n";
-	for (size_t i = 0; i < vec.size(); ++i)
+	size_t i = 0;
+	while (i < vec.size())
+	{
 		std::cout << vec[i] << " ";
+		i++;
+	}
 	std::cout << std::endl;
 
 	std::cout << "Final sorted deque:\n";
-	for (size_t i = 0; i < deq.size(); ++i)
+	i = 0;
+	while (i < deq.size())
+	{
 		std::cout << deq[i] << " ";
+		i++;
+	}
 	std::cout << std::endl;
+
 }
 
 int main(int ac , char **av)

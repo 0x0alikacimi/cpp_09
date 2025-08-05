@@ -41,11 +41,6 @@ void pmergeme_vec(std::vector<int> &vec)
 		i += 2;
 	}
 
-	if (i < vec.size())
-	{
-		std::cout << "Unpaired element left in the original vector: " << vec[i] << std::endl;
-	}
-
 	ensure_first_is_bigger(v_pairs);
 	v_pairs = mergeSort_v(v_pairs);
 
