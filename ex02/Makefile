@@ -1,6 +1,6 @@
 NAME = PmergeMe
 
-SRC_FILES = main.cpp PmergeMe.cpp
+SRC_FILES = main.cpp PmergeMe.cpp vec.cpp deq.cpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 HEADERS = PmergeMe.hpp
