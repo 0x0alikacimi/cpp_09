@@ -1,6 +1,6 @@
 #include "PmergeMe.hpp"
 
-bool is_valid(std::string str)
+bool is_valid_num(std::string str)
 {
 	if (str.empty())
 		return (false);
@@ -24,7 +24,7 @@ std::vector<int> get_data(int ac,char **av)
 	while (i < ac)
 	{
 		arg = av[i];
-		if (!is_valid(arg))
+		if (!is_valid_num(arg))
 		{
 			std::cerr << "Error: Invalid input '" << arg << "'." << std::endl;
 			exit(1);

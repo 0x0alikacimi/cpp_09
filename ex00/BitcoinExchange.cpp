@@ -187,6 +187,8 @@ void BitcoinExchange::exec_line(const std::string &line)
 	if (it == data.end())
 	{
 		it = data.lower_bound(key);
+		/*returns an iterator pointing to the first element
+			that is not less than the key*/
 		if (it == data.begin())
 		{
 			std::cerr << "Error: no earlier date for " << key << std::endl;

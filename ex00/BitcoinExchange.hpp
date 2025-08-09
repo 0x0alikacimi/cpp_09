@@ -5,6 +5,11 @@
 #include <iostream>
 #include <fstream>
 
+/*
+	map
+	A container that stores key-value pairs
+	Keys are unique
+*/
 class BitcoinExchange
 {
 	private:

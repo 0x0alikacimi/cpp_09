@@ -34,6 +34,8 @@ void pmergeme_vec(std::vector<int> &vec)
 	clock_t start = clock();
 	std::vector<std::pair<int, int> > v_pairs;
 
+	/*Step 1:
+	make pairs*/
 	size_t i = 0;
 	while (i + 1 < vec.size())
 	{
@@ -41,9 +43,14 @@ void pmergeme_vec(std::vector<int> &vec)
 		i += 2;
 	}
 
+	/*step 2:
+	makes the first element bigger in each pair
+	merge sort */
 	ensure_first_is_bigger(v_pairs);
 	v_pairs = mergeSort_v(v_pairs);
 
+	/*Step3:
+	separate pairs to main and pend */
 	std::vector<int> main;
 	std::vector<int> pend;
 	split_pairs(v_pairs, main, pend);
@@ -51,6 +58,7 @@ void pmergeme_vec(std::vector<int> &vec)
 	main.insert(main.begin(), pend[0]);
 	std::vector<int> seq = get_sequence(pend.size());
 	size_t j = 1;
+	/*inserting each element in the "pend" into the "main" using the jacobsthal sequence */
 	while (j < pend.size())
 	{
 		int idx = seq[j] - 1;
