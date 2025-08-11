@@ -22,13 +22,13 @@ std::vector<std::pair<int, int> > mergeInsert_v(std::vector<std::pair<int, int> 
 	return (res);
 }
 
-std::vector<std::pair<int, int> > mergeSort_v(std::vector<std::pair<int, int> > &w)
+std::vector<std::pair<int, int> > mergeSort_v(std::vector<std::pair<int, int> > &c)
 {
-	if (w.size() <= 1)
-		return (w);
-	int mid = w.size() / 2;
-	std::vector<std::pair<int, int> >left(w.begin(), w.begin() + mid);
-	std::vector<std::pair<int, int> >right(w.begin() + mid, w.end());
+	if (c.size() <= 1)
+		return (c);
+	int mid = c.size() / 2;
+	std::vector<std::pair<int, int> >left(c.begin(), c.begin() + mid);
+	std::vector<std::pair<int, int> >right(c.begin() + mid, c.end());
 	return (mergeInsert_v(mergeSort_v(left), mergeSort_v(right)));
 }
 /**************************************************************************************************************************/
@@ -56,13 +56,13 @@ std::deque<std::pair<int, int> > mergeInsert_d(std::deque<std::pair<int, int> > 
 	return (res);
 }
 
-std::deque<std::pair<int, int> > mergeSort_d(std::deque<std::pair<int, int> > &w)
+std::deque<std::pair<int, int> > mergeSort_d(std::deque<std::pair<int, int> > &c)
 {
-	if (w.size() <= 1)
-		return (w);
-	int mid = w.size() / 2;
-	std::deque<std::pair<int, int> >left(w.begin(), w.begin() + mid);
-	std::deque<std::pair<int, int> >right(w.begin() + mid, w.end());
+	if (c.size() <= 1)
+		return (c);
+	int mid = c.size() / 2;
+	std::deque<std::pair<int, int> >left(c.begin(), c.begin() + mid);
+	std::deque<std::pair<int, int> >right(c.begin() + mid, c.end());
 	return (mergeInsert_d(mergeSort_d(left), mergeSort_d(right)));
 }
 
