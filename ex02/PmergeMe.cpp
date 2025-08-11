@@ -3,9 +3,9 @@
 /********************************************************* vector *********************************************************/
 
 /******************* Merge Insertion *******************/
-
 std::vector<std::pair<int, int> > mergeInsert_v(std::vector<std::pair<int, int> > left, std::vector<std::pair<int, int> > right)
 {
+	/* merges two already sorted halves into one sorted result */
 	std::vector<std::pair<int, int> > res;
 	size_t i = 0, j = 0;
 	while (i < left.size() && j < right.size())
@@ -24,8 +24,9 @@ std::vector<std::pair<int, int> > mergeInsert_v(std::vector<std::pair<int, int> 
 
 std::vector<std::pair<int, int> > mergeSort_v(std::vector<std::pair<int, int> > &c)
 {
+	/* splits the array into halves recursively until each half is trivially sorted (size 1) */
 	if (c.size() <= 1)
-		return (c);
+		return (c);//break the recursion
 	int mid = c.size() / 2;
 	std::vector<std::pair<int, int> >left(c.begin(), c.begin() + mid);
 	std::vector<std::pair<int, int> >right(c.begin() + mid, c.end());
@@ -40,6 +41,7 @@ std::vector<std::pair<int, int> > mergeSort_v(std::vector<std::pair<int, int> > 
 /******************* Merge Insertion *******************/
 std::deque<std::pair<int, int> > mergeInsert_d(std::deque<std::pair<int, int> > left, std::deque<std::pair<int, int> > right)
 {
+	/* merges two already sorted halves into one sorted result */
 	std::deque<std::pair<int, int> > res;
 	size_t i = 0, j = 0;
 	while (i < left.size() && j < right.size())
@@ -58,8 +60,9 @@ std::deque<std::pair<int, int> > mergeInsert_d(std::deque<std::pair<int, int> > 
 
 std::deque<std::pair<int, int> > mergeSort_d(std::deque<std::pair<int, int> > &c)
 {
+	/* splits the array into halves recursively until each half is trivially sorted (size 1) */
 	if (c.size() <= 1)
-		return (c);
+		return (c);//break the recursion
 	int mid = c.size() / 2;
 	std::deque<std::pair<int, int> >left(c.begin(), c.begin() + mid);
 	std::deque<std::pair<int, int> >right(c.begin() + mid, c.end());
