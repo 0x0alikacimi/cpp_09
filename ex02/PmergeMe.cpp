@@ -8,18 +8,24 @@ std::vector<std::pair<int, int> > mergeInsert_v(std::vector<std::pair<int, int> 
 {
 	std::vector<std::pair<int, int> > res;
 	size_t i = 0, j = 0;
-	while (i < left.size() && j < right.size()){
-		if (left[i].first < right[j].first) res.push_back(left[i++]);
-		else res.push_back(right[j++]);
+	while (i < left.size() && j < right.size())
+	{
+		if (left[i].first < right[j].first)
+			res.push_back(left[i++]);
+		else
+			res.push_back(right[j++]);
 	}
-	while (i < left.size()) res.push_back(left[i++]);
-	while (j < right.size()) res.push_back(right[j++]);
+	while (i < left.size())
+		res.push_back(left[i++]);
+	while (j < right.size())
+		res.push_back(right[j++]);
 	return (res);
 }
 
 std::vector<std::pair<int, int> > mergeSort_v(std::vector<std::pair<int, int> > &w)
 {
-	if (w.size() <= 1) return (w);
+	if (w.size() <= 1)
+		return (w);
 	int mid = w.size() / 2;
 	std::vector<std::pair<int, int> >left(w.begin(), w.begin() + mid);
 	std::vector<std::pair<int, int> >right(w.begin() + mid, w.end());
@@ -36,18 +42,24 @@ std::deque<std::pair<int, int> > mergeInsert_d(std::deque<std::pair<int, int> > 
 {
 	std::deque<std::pair<int, int> > res;
 	size_t i = 0, j = 0;
-	while (i < left.size() && j < right.size()){
-		if (left[i].first < right[j].first) res.push_back(left[i++]);
-		else res.push_back(right[j++]);
+	while (i < left.size() && j < right.size())
+	{
+		if (left[i].first < right[j].first)
+			res.push_back(left[i++]);
+		else
+			res.push_back(right[j++]);
 	}
-	while (i < left.size()) res.push_back(left[i++]);
-	while (j < right.size()) res.push_back(right[j++]);
+	while (i < left.size())
+		res.push_back(left[i++]);
+	while (j < right.size())
+		res.push_back(right[j++]);
 	return (res);
 }
 
 std::deque<std::pair<int, int> > mergeSort_d(std::deque<std::pair<int, int> > &w)
 {
-	if (w.size() <= 1) return (w);
+	if (w.size() <= 1)
+		return (w);
 	int mid = w.size() / 2;
 	std::deque<std::pair<int, int> >left(w.begin(), w.begin() + mid);
 	std::deque<std::pair<int, int> >right(w.begin() + mid, w.end());
