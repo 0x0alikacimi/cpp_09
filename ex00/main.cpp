@@ -1,9 +1,7 @@
 #include "BitcoinExchange.hpp"
 
-int main(int ac , char **av)
+int main(int ac, char **av)
 {
-	(void)av;
-	(void)ac;
 	if (ac == 2)
 	{
 		std::string input_file = av[1];
@@ -18,5 +16,4 @@ int main(int ac , char **av)
 		std::cerr << "invalid input" << std::endl;
 		return (1);
 	}
-
 }

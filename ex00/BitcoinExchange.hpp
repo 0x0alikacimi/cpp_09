@@ -17,13 +17,14 @@ class BitcoinExchange
 
 	public:
 		BitcoinExchange();
+		BitcoinExchange(std::string &data_base_file);
 		BitcoinExchange(const BitcoinExchange &other);
 		BitcoinExchange &operator=(const BitcoinExchange &other);
 		~BitcoinExchange();
 
-		BitcoinExchange(std::string &filename);
 		void deal_with_input(std::string &input_file);
-		void exec_line(const std::string &line);
+		void deal_with_line(std::string &line);
+		void exec_line(std::string &line);
 
 };
 
